@@ -14,10 +14,10 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->id();
+            $table->id()->index();
             $table->integer('scraped_post_id');
-            $table->text('title');
-            $table->string('author');
+            $table->string('title')->index();
+            $table->string('author')->index();
             $table->string('image');
             $table->text('excerpt');
             $table->timestamp('scraped_date')->useCurrent();

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
     protected $fillable = [
         'scraped_post_id',
         'title',
@@ -16,7 +18,14 @@ class Post extends Model
         'article_date'
     ];
 
-    public function getImageUrlAttribute() {
-        return public_path(config('global.posts.images_location_path') . ($this->image ?? 'noimage.png'));
+    public $timestamps = false;
+
+    protected $casts = [
+        'scraped_date' => 'date:' . self::DATE_FORMAT,
+        'article_date' => 'date:' . self::DATE_FORMAT
+    ];
+
+    public static function getTableName() {
+        return app(self::class)->getTable();
     }
 }
