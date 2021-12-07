@@ -17,6 +17,8 @@ class PostController extends Controller
     }
 
     public function index(Request $request) {
+        $posts = Post::selectRaw('DATE(article_date) as date, group_concat(title, " ", excerpt separator " ") as context')->groupBy('date')->get();
+        dd($posts);
         $posts = Post::query();
 
         // checking if request have date filter
@@ -42,15 +44,13 @@ class PostController extends Controller
         }
 
         $posts = $posts->get();
-        dd($posts);
-        // return inertia('Event/Show', [
-        //     'event' => 'Eventer',
-        // ]);
+        // dd($posts);
+        return inertia('Posts/Index', compact('posts'));
     }
 
     function test() {
         $post = Post::first();
-        $words = str_word_count(strtolower("$post->title $post->author $post->excerpt"), 1);
+        $words = str_word_count(strtolower("$post->title $post->excerpt"), 1);
         $words = array_filter($words, function($word) {
             return strlen($word) > 4;
         });

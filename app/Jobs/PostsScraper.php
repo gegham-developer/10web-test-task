@@ -26,7 +26,7 @@ class PostsScraper implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($from = false, $to = false, $limit = 0, $is_sync = false)
+    public function __construct(bool $from = false, bool $to = false, int $limit = 0, bool $is_sync = false)
     {
         $is_sync ? $this->connection = 'sync' : null;
         $this->from = $from;

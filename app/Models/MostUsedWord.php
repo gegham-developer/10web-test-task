@@ -15,6 +15,8 @@ class MostUsedWord extends Model
         'count'
     ];
 
+    public $timestamps = false;
+
     public function mostUsedWord($date) {
         return self::whereDate($date)->first();
     }
